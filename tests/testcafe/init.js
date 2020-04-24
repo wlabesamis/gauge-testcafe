@@ -59,28 +59,23 @@ function runTestRemote () {
           return testcafe.createBrowserConnection();
       })
       .then(remoteConnection => {
-          console.log('Domain: "'+process.env['SITE_DOMAIN']+'"');
+        console.log('Domain: "'+process.env['SITE_DOMAIN']+'"');
+        console.log("Visit the url or scan the qrcode below to start the testing remotely");
+        // Outputs remoteConnection.url so that it can be visited from the remote browser.
+        console.log(remoteConnection.url);
+        // creating QR Code
+        qrcode.generate(remoteConnection.url, {small: true});
 
-          if ( isSelenoidTest ) {
-            selenoid.create(remoteConnection.url);
-          } else {
-            console.log("Visit the url or scan the qrcode below to start the testing remotely");
-            // Outputs remoteConnection.url so that it can be visited from the remote browser.
-            console.log(remoteConnection.url);
-            // creating QR Code
-            qrcode.generate(remoteConnection.url, {small: true});
-          }
-
-          remoteConnection.once('ready', () => {
-              runnerObject = runner
-                  .src(testControllerHolder.getTestHolder())
-                  .browsers(remoteConnection)
-                  .screenshots({
-                    path: process.env.gauge_reports_dir+'/'+process.env.gauge_html_report_dir
-                  })
-                  .run({skipJsErrors:process.env['SKIP_JS_ERROR']});
-              gauge.dataStore.suiteStore.put('runnerObject', runner);
-          });
+        remoteConnection.once('ready', () => {
+            runnerObject = runner
+                .src(testControllerHolder.getTestHolder())
+                .browsers(remoteConnection)
+                .screenshots({
+                  path: process.env.gauge_reports_dir+'/'+process.env.gauge_html_report_dir
+                })
+                .run({skipJsErrors:process.env['SKIP_JS_ERROR']});
+            gauge.dataStore.suiteStore.put('runnerObject', runner);
+        });
       })
 }
 
