@@ -1,11 +1,26 @@
 {
-  "name": "gauge-js-template",
-  "version": "0.0.1",
+  "name": "gauge-testcafe-js-template",
+  "version": "0.2.0",
   "description": "Starter template for writing JavaScript tests for Gauge",
   "scripts": {
-    "test": "gauge run specs/"
+    "test": "gauge run specs/",
+    "test-seo-desktop": "gauge run -e chrome --tags \"seo&desktop\" specs/",
+    "test-seo-mobile": "gauge run -e chrome --tags \"seo&mobile\" specs/",
+    "test-desktop": "gauge run -e chrome --tags \"desktop\" specs/",
+    "test-mobile": "gauge run -e chrome --tags \"mobile\" specs/",
+    "test-failed": "gauge run -e chrome --tags \"failed\" specs/",
+    "test-passed": "gauge run -e chrome --tags \"passed\" specs/"
   },
   "dependencies": {
-    "testcafe": "^0.22.0"
+    "@getgauge/cli": "^1.0.7",
+    "axios": "^0.19.0",
+    "browserstack": "^1.5.3",
+    "chromium": "^2.1.1",
+    "dotenv": "^8.2.0",
+    "lodash": "^4.17.15",
+    "qrcode-terminal": "^0.12.0",
+    "testcafe": "^1.8.1",
+    "testcafe-browser-provider-browserstack": "^1.10.0",
+    "webdriverio": "^5.18.6"
   }
 }
